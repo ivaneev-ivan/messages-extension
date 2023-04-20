@@ -2,17 +2,29 @@ import { useEffect, useState } from "react"
 
 const App = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 })
-  const [size, setSize] = useState({ width: 100, height: 100 })
+  const [size, setSize] = useState({ width: 200, height: 200 })
   const [isDragging, setIsDragging] = useState(false)
   const [resizeDirection, setResizeDirection] = useState(null)
 
   useEffect(() => {
     const handleMouseMove = (event) => {
       if (!isDragging && !resizeDirection) return
-      const newX = event.clientX
-      const newY = event.clientY
+      let newX = event.clientX
+      let newY = event.clientY
+      const screenWidth = window.screen.width
+      const screenHeight = window.screen.height
 
       if (isDragging) {
+        if (newY < 0) {
+          newY = 0
+        }
+        console.log(screenWidth, newX + size.width)
+        if (newY + size.height > screenHeight) {
+          newY = screenHeight - size.height
+        }
+        if (newX + size.width > screenWidth) {
+          newX = screenWidth - size.width
+        }
         setPosition({ x: newX, y: newY })
       }
 
@@ -133,20 +145,21 @@ const App = () => {
       style={{
         width: size.width + "px",
         height: size.height + "px",
-        border: "1px solid black",
         position: "fixed",
         left: position.x + "px",
         top: position.y + "px",
         resize: "both",
         overflow: "auto",
-        background: "lightgrey",
         userSelect: "none",
         zIndex: 9999,
         cursor: resizeDirection ? "se-resize" : "move",
       }}
+      className="block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
       onMouseDown={handleMouseDown}
     >
-      Размер изменяемого блока
+      <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+        All messages
+      </h5>
     </div>
   )
 }

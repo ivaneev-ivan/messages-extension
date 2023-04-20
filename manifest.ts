@@ -24,8 +24,7 @@ const manifest: chrome.runtime.ManifestV3 = {
     {
       matches: ["http://*/*", "https://*/*", "<all_urls>"],
       js: ["src/pages/content/index.js"],
-      // KEY for cache invalidation
-      css: ["assets/css/contentStyle<KEY>.chunk.css"],
+      css: ["assets/css/contentStyle.chunk.css"],
     },
   ],
   web_accessible_resources: [
