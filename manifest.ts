@@ -38,6 +38,7 @@ const manifest: chrome.runtime.ManifestV3 = {
       matches: ["*://*/*"],
     },
   ],
+  permissions: ["storage", "activeTab"],
 }
 
 export default manifest

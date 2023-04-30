@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react"
+import { GeneratedMessageList } from "./components/Message/MessageList"
 
 const App = () => {
+  const [move, setMove] = useState(true)
+  const [hide, setHide] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0 })
-  const [size, setSize] = useState({ width: 200, height: 200 })
+  const [size, setSize] = useState({ width: 400, height: 400 })
   const [isDragging, setIsDragging] = useState(false)
   const [resizeDirection, setResizeDirection] = useState(null)
 
@@ -155,11 +158,29 @@ const App = () => {
         cursor: resizeDirection ? "se-resize" : "move",
       }}
       className="block rounded-lg bg-white p-6 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700"
-      onMouseDown={handleMouseDown}
+      onMouseDown={move ? handleMouseDown : () => {}}
     >
-      <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-        All messages
-      </h5>
+      <button
+        className="py-2 px-3 bg-blue-400 hover:bg-blue-500 text-white text-center"
+        onClick={() => setMove(!move)}
+      >
+        {!move ? "Статичный" : "Подвиждный"}
+      </button>
+      <button
+        className="py-2 px-3 bg-slate-400 hover:bg-slate-500 text-white text-center"
+        onClick={() => setHide(!hide)}
+      >
+        {!hide ? "Скрытый" : "Видимый"}
+      </button>
+
+      {!hide && (
+        <>
+          <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+            All messages
+          </h5>
+          <GeneratedMessageList />
+        </>
+      )}
     </div>
   )
 }
