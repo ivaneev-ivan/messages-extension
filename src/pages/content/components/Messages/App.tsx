@@ -146,8 +146,8 @@ const App = () => {
   return (
     <div
       style={{
-        width: size.width + "px",
-        height: size.height + "px",
+        width: !hide ? size.width + "px" : "auto",
+        height: !hide ? size.height + "px" : "auto",
         position: "fixed",
         left: position.x + "px",
         top: position.y + "px",
@@ -170,7 +170,7 @@ const App = () => {
         className="py-2 px-3 bg-slate-400 hover:bg-slate-500 text-white text-center"
         onClick={() => setHide(!hide)}
       >
-        {!hide ? "Скрытый" : "Видимый"}
+        {hide ? "Скрытый" : "Видимый"}
       </button>
 
       {!hide && (

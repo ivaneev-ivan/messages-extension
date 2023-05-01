@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { nextKey } from "./consts"
 
 import { MessageItem } from "./Message"
 
@@ -73,9 +74,6 @@ export const GeneratedMessageList = () => {
 
   return (
     <div>
-      <div className="description" style={{ marginBottom: "10px" }}>
-        отправка сообщений
-      </div>
       {messageList.map((message, index) => {
         return (
           <MessageItem
@@ -92,18 +90,19 @@ export const GeneratedMessageList = () => {
       })}
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <button
-          style={{ width: "45%" }}
+          className="w-5/12 bg-blue-500 px-3 py-2 text-white hover:bg-blue-700"
           onClick={() => {
-            setEdit(true)
-            addMessageToList()
+            if (messageList.length != nextKey.length) {
+              setEdit(true)
+              addMessageToList()
+            }
           }}
         >
           Создать
         </button>
         <button
-          style={{ width: "45%" }}
-          color={edit ? "error" : "primary"}
           onClick={changeEdit}
+          className="w-5/12 bg-blue-500 text-white px-3 py-2 hover:bg-blue-700"
         >
           {edit ? "Готово" : "Редактировать"}
         </button>

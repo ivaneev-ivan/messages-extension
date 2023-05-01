@@ -181,7 +181,7 @@ export const MessageItem: FC<IMessageItem> = ({
         <textarea
           disabled={!isEdit}
           placeholder="Текст генерируемого сообщения"
-          className="border px-4 py-2 h-10 w-7/12"
+          className="border px-4 py-2 h-10 w-7/12 bg-white text-black"
           onChange={(event) => {
             setInputText(event.target.value)
             updateCallback({ id: id, text: event.target.value }, true)
@@ -192,7 +192,7 @@ export const MessageItem: FC<IMessageItem> = ({
       ) : (
         <select
           value={inputText}
-          className="w-7/12"
+          className="w-7/12 bg-white text-black border"
           onChange={(event) => {
             setInputText(event.target.value)
             updateCallback({ id: id, text: event.target.value }, false)
