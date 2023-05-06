@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { nextKey } from "./consts";
-import { MessageItem } from "./MessageItem";
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useEffect, useState } from "react"
+import { nextKey } from "./consts"
+import { MessageItem } from "./MessageItem"
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd"
 
 export interface IMessageItemList {
   text: string
@@ -65,24 +65,24 @@ export const GeneratedMessageList = () => {
     })
     if (hasNull) {
       alert("Сначала введите текст в поле")
-    } el;se if (messageList.length > 0) {
+    } else if (messageList.length > 0) {
       setEdit(!edit)
-    } el;se {
+    } else {
       alert("Сначала создайте сообщение")
     }
   }
 
   const onDragEnd = (result) => {
     if (!result.destination) {
-      return;
+      return
     }
 
-    const items = Array.from(messageList);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+    const items = Array.from(messageList)
+    const [reorderedItem] = items.splice(result.source.index, 1)
+    items.splice(result.destination.index, 0, reorderedItem)
 
-    setMessageList(items);
-    chrome.storage.local.set({ messageList: items });
+    setMessageList(items)
+    chrome.storage.local.set({ messageList: items })
   }
 
   return (
@@ -124,8 +124,8 @@ export const GeneratedMessageList = () => {
           className="w-5/12 text-black font-medium"
           onClick={() => {
             if (messageList.length != nextKey.length) {
-              setEdit(true);
-              addMessageToList();
+              setEdit(true)
+              addMessageToList()
             }
           }}
         >

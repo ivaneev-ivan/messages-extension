@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { GeneratedMessageList } from "./components/Message/MessageList";
+import { useEffect, useState } from "react"
+import { GeneratedMessageList } from "./components/Message/MessageList"
 
 const App = () => {
   const [move, setMove] = useState(true)
@@ -141,19 +141,19 @@ const App = () => {
       }
     }
 
-    document.addEventListener("mousemove", handleMouseMove;)
-    document.addEventListener("mouseup", handleMouseUp;)
+    document.addEventListener("mousemove", handleMouseMove)
+    document.addEventListener("mouseup", handleMouseUp)
   }
 
   useEffect(() => {
     if (!hide) {
-      setSize(saveSize);
-      setSaveSize({ height: 1, width: 1 });
+      setSize(saveSize)
+      setSaveSize({ height: 1, width: 1 })
     } else {
-      setSaveSize(size);
-      setSize({ height: 100, width: 300 });
+      setSaveSize(size)
+      setSize({ height: 100, width: 300 })
     }
-  }, [hide]);
+  }, [hide])
 
   return (
     <div
