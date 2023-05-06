@@ -146,6 +146,29 @@ const App = () => {
   }
 
   useEffect(() => {
+    const keyName = `position_user_window_${window.location.hostname}`
+    chrome.storage.local.get(
+      [keyName, "hideWindowUser", "windowUserSize", "moveWindowUser"],
+      ({
+        [keyName]: position,
+        hideWindowUser,
+        windowUserSize,
+        moveWindowUser,
+      }) => {
+        if (position) setPosition(position)
+        if (hideWindowUser) setHide(hideWindowUser)
+        if (windowUserSize) setSize(windowUserSize)
+        if (moveWindowUser) setMove(moveWindowUser)
+      }
+    )
+  }, [])
+
+  useEffect(() => {
+    const keyName = `position_user_window_${window.location.hostname}`
+    chrome.storage.local.set({ [keyName]: position })
+  }, [position])
+
+  useEffect(() => {
     if (!hide) {
       setSize(saveSize)
       setSaveSize({ height: 1, width: 1 })
@@ -153,7 +176,22 @@ const App = () => {
       setSaveSize(size)
       setSize({ height: 100, width: 300 })
     }
+    chrome.storage.local.set({
+      hideWindowUser: hide,
+    })
   }, [hide])
+
+  useEffect(() => {
+    chrome.storage.local.set({
+      windowUserSize: !hide ? size : saveSize,
+    })
+  }, [size, saveSize])
+
+  useEffect(() => {
+    chrome.storage.local.set({
+      moveWindowUser: move,
+    })
+  }, [move])
 
   return (
     <div
