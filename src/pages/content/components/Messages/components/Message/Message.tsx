@@ -66,13 +66,14 @@ function shuffle(array: Array<string>) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function regular_replace_callback(
   pattern: RegExp,
-  callback: (message: any) => string,
+  callback: (message: [string, string] | [string, string, string]) => string,
   string: string
 ) {
   ;[...string.matchAll(pattern)].forEach((value) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     string = string.replace(value[0], callback(value))
   })
-
   return string
 }
 
@@ -123,35 +124,33 @@ export const MessageItem: FC<IMessageItem> = ({
   const [inputText, setInputText] = useState(text)
 
   const sendMessage = (message: string, replace_name: boolean) => {
-    let messageInput = null
+    let messageInput
     if (window.location.href.includes("https://vk.com/im")) {
       messageInput = document.querySelector("div.im-chat-input--text")
     } else {
       messageInput = document.activeElement
     }
-    if (messageInput !== null) {
-      if (message.includes("*name*")) {
-        if (replace_name) {
-          let name = getNameInPage()
-          if (!name) {
-            name = ""
-          }
-          message = message.replace("*name*", name)
-        } else {
-          message = message.replace("*name*", "")
+    if (message.includes("*name*")) {
+      if (replace_name) {
+        let name = getNameInPage()
+        if (!name) {
+          name = ""
         }
-      }
-      messageInput.click()
-      if (messageInput.tagName == "BODY") {
-        return
-      }
-      if (messageInput.tagName != "INPUT") {
-        messageInput.textContent = message
+        message = message.replace("*name*", name)
       } else {
-        messageInput.value = message
+        message = message.replace("*name*", "")
       }
-      messageInput.focus()
     }
+    messageInput.click()
+    if (messageInput.tagName == "BODY") {
+      return
+    }
+    if (messageInput.tagName != "INPUT") {
+      messageInput.textContent = message
+    } else {
+      messageInput.value = message
+    }
+    messageInput.focus()
   }
   useHotkeys(
     `alt+${nextKey[index].eng},alt+${nextKey[index].ru}`,
