@@ -175,7 +175,7 @@ const App = () => {
 
       {!hide && (
         <>
-          <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
+          <h5 className="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50 transition">
             All messages
           </h5>
           <GeneratedMessageList />

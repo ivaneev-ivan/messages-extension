@@ -179,9 +179,8 @@ export const MessageItem: FC<IMessageItem> = ({
       </button>
       {isEdit ? (
         <textarea
-          disabled={!isEdit}
           placeholder="Текст генерируемого сообщения"
-          className="border px-4 py-2 h-10 w-7/12 bg-white text-black"
+          className="border px-4 py-2 h-10 w-7/12 bg-white text-black placeholder:text-xs"
           onChange={(event) => {
             setInputText(event.target.value)
             updateCallback({ id: id, text: event.target.value }, true)
