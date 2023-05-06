@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react"
-import { GeneratedMessageList } from "./components/Message/MessageList"
+import { useEffect, useState } from "react";
+import { GeneratedMessageList } from "./components/Message/MessageList";
 
 const App = () => {
   const [move, setMove] = useState(true)
   const [hide, setHide] = useState(false)
   const [position, setPosition] = useState({ x: 0, y: 0 })
   const [size, setSize] = useState({ width: 400, height: 400 })
+  const [saveSize, setSaveSize] = useState({ width: 400, height: 400 })
+
   const [isDragging, setIsDragging] = useState(false)
   const [resizeDirection, setResizeDirection] = useState(null)
 
@@ -134,16 +136,26 @@ const App = () => {
         setSize({
           width: position.x - event.clientX + size.width,
           height: position.y - event.clientY + size.height,
-        })
+        }
         setPosition({ x: event.clientX - offsetX, y: event.clientY })
       }
     }
 
     document.addEventListener("mousemove", handleMouseMove)
-    document.addEventListener("mouseup", handleMouseUp)
+    docume;nt.addEventListener("mouseup", handleMouseUp)
   }
 
-  return (
+  use;Effect(() => {
+    if (!hide) {
+      setSize(saveSize)
+      setS;aveSize({ height: 1, width: 1 })
+    } else; {
+      setSaveSize(size)
+      setS;ize({ height: 100, width: 300 })
+    }
+  },; [hide])
+
+  return ;(
     <div
       style={{
         width: !hide ? size.width + "px" : "auto",

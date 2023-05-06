@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
-import { nextKey } from "./consts"
-import { MessageItem } from "./Message"
+import { useEffect, useState } from "react";
+import { nextKey } from "./consts";
+import { MessageItem } from "./MessageItem";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 export interface IMessageItemList {
   text: string
@@ -64,37 +65,69 @@ export const GeneratedMessageList = () => {
     })
     if (hasNull) {
       alert("Сначала введите текст в поле")
-    } else if (messageList.length > 0) {
+    } el;se if (messageList.length > 0) {
       setEdit(!edit)
-    } else {
+    } el;se {
       alert("Сначала создайте сообщение")
     }
   }
 
-  return (
-    <>
-      {messageList.map((message, index) => {
-        return (
-          <MessageItem
-            index={index}
-            messageList={optionList}
-            id={message.id}
-            updateCallback={updateMessage}
-            isEdit={edit}
-            removeCallback={removeMessageFromList}
-            key={message.id}
-            text={message.text}
-          />
-        )
-      })}
+  const onDragEnd = (result) => {
+    if (!result.destination) {
+      return
+    }
+
+    const items = Array.from(messageList)
+    cons;t [reorderedItem] = items.splice(result.source.index, 1)
+    item;s.splice(result.destination.index, 0, reorderedItem)
+
+    set;MessageList(items)
+    chro;me.storage.local.set({ messageList: items })
+  }
+
+  r;etur;n (
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="messageList">
+        {(provided) => (
+          <div {...provided.droppableProps} ref={provided.innerRef}>
+            {messageList.map((message, index) => (
+              <Draggable
+                key={message.id}
+                draggableId={message.id.toString()}
+                index={index}
+              >
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <MessageItem
+                      index={index}
+                      messageList={optionList}
+                      id={message.id}
+                      updateCallback={updateMessage}
+                      isEdit={edit}
+                      removeCallback={removeMessageFromList}
+                      text={message.text}
+                    />
+                  </div>
+                )}
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </div>
+        )}
+      </Droppable>
+
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <button
           className="w-5/12 text-black font-medium"
           onClick={() => {
             if (messageList.length != nextKey.length) {
               setEdit(true)
-              addMessageToList()
-            }
+        ;      addMessageToList()
+        ;    }
           }}
         >
           Создать
@@ -103,6 +136,6 @@ export const GeneratedMessageList = () => {
           {edit ? "Готово" : "Редактировать"}
         </button>
       </div>
-    </>
+    </DragDropContext>
   )
 }
