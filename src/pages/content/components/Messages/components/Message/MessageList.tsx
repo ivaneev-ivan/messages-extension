@@ -74,18 +74,18 @@ export const GeneratedMessageList = () => {
 
   const onDragEnd = (result) => {
     if (!result.destination) {
-      return
+      return;
     }
 
-    const items = Array.from(messageList)
-    cons;t [reorderedItem] = items.splice(result.source.index, 1)
-    item;s.splice(result.destination.index, 0, reorderedItem)
+    const items = Array.from(messageList);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
 
-    set;MessageList(items)
-    chro;me.storage.local.set({ messageList: items })
+    setMessageList(items);
+    chrome.storage.local.set({ messageList: items });
   }
 
-  r;etur;n (
+  return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="messageList">
         {(provided) => (
@@ -119,15 +119,14 @@ export const GeneratedMessageList = () => {
           </div>
         )}
       </Droppable>
-
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <button
           className="w-5/12 text-black font-medium"
           onClick={() => {
             if (messageList.length != nextKey.length) {
-              setEdit(true)
-        ;      addMessageToList()
-        ;    }
+              setEdit(true);
+              addMessageToList();
+            }
           }}
         >
           Создать
